@@ -25,9 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data['students'] = Students::where('user_id',auth::user()->id)->first();
+        //$data['students'] = Students::where('user_id',auth::user()->id)->first();
         //return $data['students'];
-        return view('show',$data);
+        return view('show');
 
     }
 

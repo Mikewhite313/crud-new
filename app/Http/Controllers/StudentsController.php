@@ -10,6 +10,7 @@ use DB;
 use auth;
 class StudentsController extends Controller
 {
+    
     public function login()
     {
         return view('Admin');

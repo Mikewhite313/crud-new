@@ -32,13 +32,12 @@
         <th>Address</th>
 
     </tr>
-
     <tr>
         <td>{{auth::user()->id}}</td>
         <td>{{auth::user()->name}}</td>
         <td>{{auth::user()->email}}</td>
-        <td>{{$user->student->phone ?? ''}}</td>
-        <td>{{$user->student->address ?? ''}}</td>
+        <td>{{auth::user()->student->phone ?? ''}}</td>
+        <td>{{auth::user()->student->address ?? ''}}</td>
         
     </tr>
   </div>
