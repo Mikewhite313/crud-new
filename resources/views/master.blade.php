@@ -23,8 +23,8 @@ input[type=text], input[type=password] {
 button {
   background-color: #04AA6D;
   color: white;
-  padding: 10px 20px;
-  margin: 0 5px;
+  padding: 14px 20px;
+  margin: 8px 0;
   border: none;
   cursor: pointer;
   width: 100%;
@@ -93,32 +93,15 @@ span.psw {
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li >
-      
-                                <h3>Welcome {{ Auth::user()->name }} </h3>
-                            </li>
-                            
-        
-                        @endguest
-                        
-                    </ul>
+                    
                     
  
                 </div>
             </div>
-            
+            <form method="post" action="{{route('logout')}}">
+                              @csrf
+                            <button type="submit" style="width: 50; float:right">logout</button>
+                            </form>
         </nav>
         
 

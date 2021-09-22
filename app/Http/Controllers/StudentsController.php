@@ -6,23 +6,28 @@ use Illuminate\Http\Request;
 use App\Students;
 use App\User;
 use Hash;
+use DB;
+use auth;
 class StudentsController extends Controller
 {
     public function login()
     {
-        return view('login');
+        return view('Admin');
     }
     public function index()
     {
-    	$users = User::latest()->get();
+    	$users = User::with('student')->get();
+        // dd($users);
+        // $students = Students::latest()->get();
         
-    	//dd($students);
+        //$data['students'] = Students::where('user_id',auth::user()->id)->first();
+    	//dd($users);
     	return view('index', compact('users'));
     }
 
     public function create()
     {
-        return view('auth.register');
+        return view('create');
     }
 
     public function store(Request $request)
@@ -39,16 +44,21 @@ class StudentsController extends Controller
         
         $user = new User();
         $user->name = $request->name;
-        // $user->phone = $request->phone;
+        //$user->phone = $request->phone;
         $user->email = $request->email;
         // $user->address = $request->address;
         $user->password = Hash::make($request->password);
         $user->save();
         // dd($user);        
+        $students = new Students();
+        $students->user_id = $user->id;
+        $students->phone = $request->phone;
+        $students->address = $request->address;
+        $students->save();
 
-        \Auth::attempt(['email' => $request->email, 'password' => $request->password]);
+        // dd($students);
         
-        return redirect()->route('student.show', $user->id)->with('success','Record Added Successfully');
+        return redirect()->route('index');
 
     }
     
@@ -61,37 +71,41 @@ class StudentsController extends Controller
     public function update(Request $request,$id)
     {
     	$this->validate($request,[
-            'name'=>'required',
-            'phone'=>'required',
-            'email'=>'required',
-            'address'=>'required',
+            'name',
+            'password',
+            'email',
+            'phone',
+            'email',
+            'address',
         ]);
 
-        $student = Students::find($id);
+        $user = User::find($id);
         $student->name = $request->name;
-        $student->phone = $request->phone;
-        $student->email = $request->email;
-        $student->address = $request->address;
+        $user->password = Hash::make($request->password);
+        $user->email = $request->email;
+
+        $user = Students::find($id);
+        $user->phone = $request->phone;
+        $user->address = $request->address;
         
-        if($request->hasFile('image')){
-            $file = $request->file('image');
-            $fileName = rand().'.'. $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/images'), $fileName);
+        //if($request->hasFile('image')){
+          //  $file = $request->file('image');
+            //$fileName = rand().'.'. $file->getClientOriginalExtension();
+            //$file->move(public_path('uploads/images'), $fileName);
            
-            $student->image = $fileName;
-        }else{
-            // return $request;
-            $student->image = '';
-        }
-        $student->save();
-        return redirect()->route('index')->with('success',$student->id.' No Record edited');
+            //$student->image = $fileName;}
+            
+        
+        $user->save();
+        return redirect()->route('index')->with('success',$user->id.' No Record edited');
     }
 
-    public function show(Request $request, $userId)
+    public function show()
     {   
-        $student = Students::where('user_id', $userId)->first();
+        //$student = Students::where('user_id', $userId)->first();
+        $users = User::with('student')->get();
         
-        return view('show',compact('student'));
+        return view('show',compact('users'));
 
     }
 
@@ -99,5 +113,10 @@ class StudentsController extends Controller
     {
         $student = Students::find($id)->delete();
         return redirect()->route('index')->with('success','Record Has been Deleted');
+    }
+
+    public function logout()
+    {
+        return view('logout');
     }
  }

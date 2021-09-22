@@ -1,4 +1,5 @@
-@extends('layout')
+
+@extends('master')
 @section('content')
 <div class="row">
     <div class="col-lg-12 margin-tb">
@@ -10,7 +11,7 @@
 </div>
 <div class="row" align="left">
     <div class="pull-right">
-        <a class="btn btn-success" href="{{route('student.create')}}"> Add New Student </a>
+        <a class="btn btn-success" href="{{route('create')}}" > Add New Student </a>
     </div>
 </div>
 <br/>
@@ -25,28 +26,29 @@
         <th>No</th>
 
         <th>Name</th>
+        <th>Email</th>
         <th>Phone</th>
         <th>Address</th>
-        <th>Email</th>
+        
         <th>Option</th>
     </tr>
 
-    @foreach ($users as $user)
+    @foreach($users as $user)
+    
     <tr>
         <td>{{$user->id}}</td>
         <td>{{$user->name}}</td>
-        <td>{{$user->phone}}</td>
-        <td>{{$user->address}}</td>
         <td>{{$user->email}}</td>
+        <td>{{$user->student->phone ?? ''}}</td>
+        <td>{{$user->student->address ?? ''}}</td>
+        <td></td>
         
-        
-        
-
-        <td>
-            
-        </td>
     </tr>
-    @endforeach
+   @endforeach
+
+   
+
+    
 </table>
 
 @endsection

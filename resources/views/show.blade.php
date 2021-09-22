@@ -1,4 +1,4 @@
-@extends('layout')  
+@extends('layouts.app')  
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -28,6 +28,8 @@
         <th>No</th>
         <th>Name</th>
         <th>Email</th>
+        <th>Phone Number</th>
+        <th>Address</th>
 
     </tr>
 
@@ -35,11 +37,14 @@
         <td>{{auth::user()->id}}</td>
         <td>{{auth::user()->name}}</td>
         <td>{{auth::user()->email}}</td>
+        <td>{{$user->student->phone ?? ''}}</td>
+        <td>{{$user->student->address ?? ''}}</td>
+        
     </tr>
   </div>
   <br/>
   
-    
+  
     
 
 </div>

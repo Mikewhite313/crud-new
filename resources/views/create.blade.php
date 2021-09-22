@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-md-8">
                 <div class="form-group">
-                    <label for="roll">Student Name <span class="required">*</span></label>
+                    <label for="roll">Name <span class="required">*</span></label>
                     <input type="text" class="form-control" placeholder="Student Name" name="name" id="name">
                  </div>
                 </div>
@@ -47,18 +47,27 @@
                     <input type="text" class="form-control" placeholder="Phone" name="phone" id="phone">
                  </div>
                 </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                 <div class="form-group">
                     <label for="address">Address</label>
                     <input type="text" class="form-control" placeholder="Address" name="address" id="address">
+                    
                  </div>
+                 
                 </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                  <strong>Image</strong>
-                  <input type="file" name="image" class="custom-file-input">
-                  
-                  </div>
+                <div class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                 </div>
                 
               </div>
